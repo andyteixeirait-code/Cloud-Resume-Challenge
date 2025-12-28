@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0A0E27;
+            --accent: #00F0FF;
+            --accent-warm: #FF6B35;
+            --text: #E8E9ED;
+            --text-dim: #9BA3B4;
+            --surface: #13182E;
+            --surface-light: #1A2140;
+            --glow: rgba(0, 240, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background grid */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--accent) 1px, transparent 1px),
+                linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.03;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Floating orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            top: 10%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 250px;
+            height: 250px;
+            background: var(--accent-warm);
+            bottom: 20%;
+            left: 15%;
+            animation-delay: 5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.1); }
+            50% { transform: translate(-20px, 20px) scale(0.9); }
+            75% { transform: translate(20px, 10px) scale(1.05); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 6rem 0 4rem;
+            position: relative;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 3rem;
+        }
+
+        .name-section {
+            flex: 1;
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            line-height: 0.95;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+            animation: slideInLeft 0.8s ease-out 0.2s both;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            animation: slideInLeft 0.8s ease-out 0.4s both;
+        }
+
+        .contact-item {
+            background: var(--surface);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--glow);
+            transform: translateY(-2px);
+        }
+
+        .contact-label {
+            color: var(--accent);
+            font-weight: 500;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-content {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-link {
+            color: var(--text-dim);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+            border: 1px solid transparent;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+            background: var(--surface);
+            border-color: var(--accent);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            opacity: 0.3;
+            line-height: 1;
+        }
+
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .section-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+        }
+
+        /* Experience Cards */
+        .experience-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .experience-card {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent), var(--accent-warm));
+            transform: scaleY(0);
+            transition: transform 0.4s ease;
+        }
+
+        .experience-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .experience-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 10px 40px rgba(0, 240, 255, 0.1);
+            transform: translateX(8px);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .experience-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+
+        .experience-company {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .experience-date {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .experience-description {
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        /* Certifications */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .cert-card {
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .cert-card::after {
+            content: '✓';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: var(--accent);
+            opacity: 0;
+            transform: scale(0) rotate(-180deg);
+            transition: all 0.4s ease;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.15);
+        }
+
+        .cert-card:hover::after {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        .cert-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-issuer {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .cert-date {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        /* Projects */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--surface);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 15px 50px rgba(0, 240, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, var(--surface-light) 0%, var(--surface) 100%);
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+        }
+
+        .project-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .project-body {
+            padding: 1.5rem;
+        }
+
+        .project-description {
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+        }
+
+        .skill-category-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-category-title::before {
+            content: '▸';
+            font-size: 1.5rem;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .skill-item {
+            color: var(--text-dim);
+            padding: 0.5rem;
+            border-left: 2px solid rgba(0, 240, 255, 0.2);
+            padding-left: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            color: var(--text);
+            border-left-color: var(--accent);
+            padding-left: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 4rem;
+            padding: 3rem 0;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            text-align: center;
+        }
+
+        .footer-content {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .footer-link {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-warm);
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+            }
+
+            .section-number {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .project-grid,
+            .cert-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .experience-header {
+                flex-direction: column;
+            }
+        }
+
+        /* Scroll animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="name-section">
+                    <h1>Your Name</h1>
+                    <p class="tagline">Technical Professional | Systems Engineer | Problem Solver</p>
+                    <div class="contact-grid">
+                        <div class="contact-item">
+                            <span class="contact-label">Email</span>
+                            your.email@example.com
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">LinkedIn</span>
+                            linkedin.com/in/yourprofile
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">GitHub</span>
+                            github.com/yourusername
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">Location</span>
+                            City, State
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="#experience" class="nav-link">Experience</a>
+            <a href="#certifications" class="nav-link">Certifications</a>
+            <a href="#projects" class="nav-link">Home Lab Projects</a>
+            <a href="#skills" class="nav-link">Skills</a>
+            <a href="#education" class="nav-link">Education</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Experience Section -->
+        <section id="experience" class="animate-in">
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2>Work Experience</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">Senior Systems Engineer</h3>
+                            <p class="experience-company">Tech Company Name</p>
+                        </div>
+                        <span class="experience-date">2022 - Present</span>
+                    </div>
+                    <p class="experience-description">
+                        Led infrastructure modernization initiatives, reducing deployment time by 60% through automation and containerization. Managed cloud architecture for high-availability services serving 100K+ daily users. Implemented monitoring solutions that improved incident response time by 45%.
+                    </p>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">Systems Administrator</h3>
+                            <p class="experience-company">Previous Company</p>
+                        </div>
+                        <span class="experience-date">2019 - 2022</span>
+                    </div>
+                    <p class="experience-description">
+                        Maintained critical infrastructure across 200+ servers. Developed automation scripts that reduced manual configuration time by 70%. Collaborated with development teams to optimize deployment pipelines and improve system reliability.
+                    </p>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">IT Specialist</h3>
+                            <p class="experience-company">Earlier Company</p>
+                        </div>
+                        <span class="experience-date">2017 - 2019</span>
+                    </div>
+                    <p class="experience-description">
+                        Provided technical support and system maintenance for enterprise environments. Implemented security best practices and conducted regular system audits. Assisted in network infrastructure upgrades and migrations.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section id="certifications" class="animate-in">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2>Certifications</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="cert-grid">
+                <div class="cert-card">
+                    <h3 class="cert-name">AWS Certified Solutions Architect</h3>
+                    <p class="cert-issuer">Amazon Web Services</p>
+                    <p class="cert-date">Valid: 2023 - 2026</p>
+                </div>
+
+                <div class="cert-card">
+                    <h3 class="cert-name">CompTIA Security+</h3>
+                    <p class="cert-issuer">CompTIA</p>
+                    <p class="cert-date">Valid: 2022 - 2025</p>
+                </div>
+
+                <div class="cert-card">
+                    <h3 class="cert-name">Certified Kubernetes Administrator</h3>
+                    <p class="cert-issuer">Cloud Native Computing Foundation</p>
+                    <p class="cert-date">Valid: 2023 - 2026</p>
+                </div>
+
+                <div class="cert-card">
+                    <h3 class="cert-name">Red Hat Certified Engineer</h3>
+                    <p class="cert-issuer">Red Hat</p>
+                    <p class="cert-date">Valid: 2021 - 2024</p>
+                </div>
+
+                <div class="cert-card">
+                    <h3 class="cert-name">Cisco CCNA</h3>
+                    <p class="cert-issuer">Cisco Systems</p>
+                    <p class="cert-date">Valid: 2022 - 2025</p>
+                </div>
+
+                <div class="cert-card">
+                    <h3 class="cert-name">Azure Administrator</h3>
+                    <p class="cert-issuer">Microsoft</p>
+                    <p class="cert-date">Valid: 2023 - 2024</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Home Lab Projects Section -->
+        <section id="projects" class="animate-in">
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <h2>Home Lab Projects</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-name">Kubernetes Homelab Cluster</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">Kubernetes</span>
+                            <span class="tech-tag">Docker</span>
+                            <span class="tech-tag">Helm</span>
+                            <span class="tech-tag">ArgoCD</span>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Built a 5-node Kubernetes cluster running on Raspberry Pi 4s. Implemented GitOps workflows using ArgoCD, automated certificate management with cert-manager, and deployed monitoring stack with Prometheus and Grafana.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-name">Network Security Lab</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">pfSense</span>
+                            <span class="tech-tag">Suricata</span>
+                            <span class="tech-tag">ELK Stack</span>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Configured enterprise-grade firewall with pfSense, integrated intrusion detection with Suricata IDS/IPS, and built centralized logging with ELK stack for security event analysis and threat hunting.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-name">Home Automation & Monitoring</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">Home Assistant</span>
+                            <span class="tech-tag">MQTT</span>
+                            <span class="tech-tag">Node-RED</span>
+                            <span class="tech-tag">InfluxDB</span>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Designed and deployed comprehensive home automation system with sensor monitoring, automated workflows, and custom dashboards. Integrated 30+ IoT devices with secure network segmentation.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-name">CI/CD Pipeline Lab</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">GitLab</span>
+                            <span class="tech-tag">Jenkins</span>
+                            <span class="tech-tag">Terraform</span>
+                            <span class="tech-tag">Ansible</span>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Created full CI/CD pipeline with automated testing, security scanning, and infrastructure-as-code deployment. Experimented with various deployment strategies including blue-green and canary releases.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-name">Virtual Machine Lab</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">Proxmox</span>
+                            <span class="tech-tag">KVM</span>
+                            <span class="tech-tag">ZFS</span>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Deployed Proxmox VE cluster with 3 nodes for high availability. Configured ZFS storage pools with snapshots and replication. Hosts various Linux and Windows VMs for testing and development.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-name">Media & Backup Server</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">TrueNAS</span>
+                            <span class="tech-tag">Plex</span>
+                            <span class="tech-tag">Nextcloud</span>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Built redundant storage server with TrueNAS featuring automated backups, media streaming capabilities, and private cloud storage. Implemented 3-2-1 backup strategy with offsite replication.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="animate-in">
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <h2>Technical Skills</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Cloud & Infrastructure</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">AWS (EC2, S3, Lambda, RDS)</div>
+                        <div class="skill-item">Microsoft Azure</div>
+                        <div class="skill-item">Google Cloud Platform</div>
+                        <div class="skill-item">Terraform & Infrastructure as Code</div>
+                        <div class="skill-item">VMware vSphere</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Containers & Orchestration</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Kubernetes (K8s)</div>
+                        <div class="skill-item">Docker & Docker Compose</div>
+                        <div class="skill-item">Helm Charts</div>
+                        <div class="skill-item">OpenShift</div>
+                        <div class="skill-item">Container Security</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Automation & DevOps</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Ansible & Automation</div>
+                        <div class="skill-item">GitLab CI/CD</div>
+                        <div class="skill-item">Jenkins</div>
+                        <div class="skill-item">GitHub Actions</div>
+                        <div class="skill-item">ArgoCD & GitOps</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Operating Systems</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Linux (RHEL, Ubuntu, Debian)</div>
+                        <div class="skill-item">Windows Server</div>
+                        <div class="skill-item">macOS Administration</div>
+                        <div class="skill-item">Shell Scripting (Bash, PowerShell)</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Monitoring & Logging</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Prometheus & Grafana</div>
+                        <div class="skill-item">ELK Stack (Elasticsearch, Logstash, Kibana)</div>
+                        <div class="skill-item">Datadog</div>
+                        <div class="skill-item">New Relic</div>
+                        <div class="skill-item">Splunk</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Networking & Security</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">TCP/IP, DNS, DHCP</div>
+                        <div class="skill-item">VPN & Firewall Configuration</div>
+                        <div class="skill-item">Network Security Best Practices</div>
+                        <div class="skill-item">SSL/TLS Certificate Management</div>
+                        <div class="skill-item">VLAN & Network Segmentation</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="animate-in">
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <h2>Education</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">Bachelor of Science in Computer Science</h3>
+                            <p class="experience-company">University Name</p>
+                        </div>
+                        <span class="experience-date">2013 - 2017</span>
+                    </div>
+                    <p class="experience-description">
+                        Focused on systems architecture, networking, and software engineering. Completed capstone project on distributed systems and cloud computing. Dean's List recognition for academic excellence.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2024 Your Name. Built with creativity and precision.</p>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Download Resume PDF</a>
+                    <a href="#" class="footer-link">View Portfolio</a>
+                    <a href="#" class="footer-link">Contact Me</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
